@@ -55,54 +55,63 @@ jobs:
         timeout-minutes: 15
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
+          watch date &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - uses: actions/upload-artifact@v2
