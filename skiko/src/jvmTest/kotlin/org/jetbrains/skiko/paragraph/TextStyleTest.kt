@@ -59,7 +59,10 @@ class TextStyleTest {
             makeImageSnapshot()
         }
 
-        screenshots.assert(image)
+        screenshots.assert(
+            image,
+            testIdentifier = "org_jetbrains_skiko_tests_org_jetbrains_skiko_paragraph_TextStyleTest_canApplyBaselineShift"
+        )
     }
 
 
@@ -128,6 +131,9 @@ class TextStyleTest {
             makeImageSnapshot()
         }
 
-        screenshots.assert(image)
+        screenshots.assert(
+            image,
+            testIdentifier = "org_jetbrains_skiko_tests_org_jetbrains_skiko_paragraph_TextStyleTest_canApplyTextIndent"
+        )
     }
 }

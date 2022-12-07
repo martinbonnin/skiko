@@ -97,12 +97,12 @@ class SkiaLayerTest {
             window.isVisible = true
 
             delay(1000)
-            screenshots.assert(window.bounds, "frame1")
+            screenshots.assert(window.bounds, "frame1", "org_jetbrains_skiko_SkiaLayerTest_render_single_window" )
 
             app.rectWidth = 100
             window.layer.needRedraw()
             delay(1000)
-            screenshots.assert(window.bounds, "frame2")
+            screenshots.assert(window.bounds, "frame2", "org_jetbrains_skiko_SkiaLayerTest_render_single_window")
         } finally {
             window.close()
         }
@@ -123,12 +123,20 @@ class SkiaLayerTest {
             window.isVisible = true
 
             delay(1000)
-            screenshots.assert(window.bounds, "frame1")
+            screenshots.assert(
+                window.bounds,
+                "frame1",
+                "org_jetbrains_skiko_SkiaLayerTest_render_single_window_before_window_show"
+            )
 
             app.rectWidth = 100
             window.layer.needRedraw()
             delay(1000)
-            screenshots.assert(window.bounds, "frame2")
+            screenshots.assert(
+                window.bounds,
+                "frame2",
+                "org_jetbrains_skiko_SkiaLayerTest_render_single_window_before_window_show"
+            )
         } finally {
             window.close()
         }
@@ -198,7 +206,7 @@ class SkiaLayerTest {
             window.setSize(80, 40)
             delay(1000)
 
-            screenshots.assert(window.bounds)
+            screenshots.assert(window.bounds, testIdentifier = "org_jetbrains_skiko_SkiaLayerTest_resize_window")
         } finally {
             window.close()
         }
@@ -224,15 +232,15 @@ class SkiaLayerTest {
 
             window1.toFront()
             delay(1000)
-            screenshots.assert(window1.bounds, "window1")
+            screenshots.assert(window1.bounds, "window1", "org_jetbrains_skiko_SkiaLayerTest_render_three_windows")
 
             window2.toFront()
             delay(1000)
-            screenshots.assert(window2.bounds, "window2")
+            screenshots.assert(window2.bounds, "window2", "org_jetbrains_skiko_SkiaLayerTest_render_three_windows")
 
             window3.toFront()
             delay(1000)
-            screenshots.assert(window3.bounds, "window3")
+            screenshots.assert(window3.bounds, "window3", "org_jetbrains_skiko_SkiaLayerTest_render_three_windows")
         } finally {
             window1.close()
             window2.close()
@@ -514,17 +522,17 @@ class SkiaLayerTest {
 
     @Test
     fun `render text (Windows)`() {
-        testRenderText(OS.Windows)
+        testRenderText(OS.Windows, "org_jetbrains_skiko_SkiaLayerTest_render_text_Windows")
     }
 
     @Test
     fun `render text (Linux)`() {
-        testRenderText(OS.Linux)
+        testRenderText(OS.Linux, "org_jetbrains_skiko_SkiaLayerTest_render_text_Linux")
     }
 
     @Test
     fun `render text (MacOS)`() {
-        testRenderText(OS.MacOS)
+        testRenderText(OS.MacOS, "org_jetbrains_skiko_SkiaLayerTest_render_text_MacOS")
     }
 
     @Test
@@ -640,7 +648,7 @@ class SkiaLayerTest {
         }
     }
 
-    private fun testRenderText(os: OS) = uiTest {
+    private fun testRenderText(os: OS, testIdentifier:String) = uiTest {
         assumeTrue(hostOs == os)
 
         val window = UiTestWindow()
@@ -673,7 +681,7 @@ class SkiaLayerTest {
             assertEquals(true, lineMetrics.first().isHardBreak)
             assertEquals(0, lineMetrics.first().lineNumber)
 
-            screenshots.assert(window.bounds)
+            screenshots.assert(window.bounds, testIdentifier = testIdentifier)
         } finally {
             window.close()
         }

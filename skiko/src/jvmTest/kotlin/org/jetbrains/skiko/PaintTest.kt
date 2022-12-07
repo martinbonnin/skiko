@@ -43,7 +43,7 @@ class PaintTest {
             true
         )
 
-        screenshots.assert(surface.makeImageSnapshot())
+        screenshots.assert(surface.makeImageSnapshot(), testIdentifier = "org_jetbrains_skiko_PaintTest_filterQuality")
     }
 
     @Test
@@ -58,7 +58,7 @@ class PaintTest {
             }
         )
 
-        screenshots.assert(surface.makeImageSnapshot())
+        screenshots.assert(surface.makeImageSnapshot(), testIdentifier = "org_jetbrains_skiko_PaintTest_canDrawShader")
     }
 
     @Test
