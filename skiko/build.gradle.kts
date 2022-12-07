@@ -219,6 +219,12 @@ val Project.supportWasm: Boolean
 val Project.supportAndroid: Boolean
     get() = findProperty("skiko.android.enabled") == "true" // || isInIdea
 
+tasks.withType<Test> {
+    useJUnitPlatform {
+
+    }
+}
+
 kotlin {
     jvm("awt") {
         compilations.all {
@@ -305,7 +311,9 @@ kotlin {
         val jvmTest by creating {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
-                implementation(kotlin("test-junit"))
+                implementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+                implementation("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+                implementation("org.junit.jupiter:junit-jupiter-migrationsupport:5.9.1")
                 implementation(kotlin("test"))
             }
         }

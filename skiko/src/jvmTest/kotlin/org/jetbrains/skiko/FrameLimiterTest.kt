@@ -8,6 +8,8 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.junit.jupiter.api.Timeout
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.ceil
 
@@ -180,7 +182,8 @@ class FrameLimiterTest {
         }
     }
 
-    @Test(timeout = 30000)
+    @Test
+    @Timeout(value = 30_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `multithreaded awaiter`() {
         val scope = CoroutineScope(Dispatchers.IO)
         val frameLimiter = FrameLimiter(scope, { 0 }, nanoTime = System::nanoTime)
@@ -194,7 +197,8 @@ class FrameLimiterTest {
         scope.cancel()
     }
 
-    @Test(timeout = 30000)
+    @Test
+    @Timeout(value = 30_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `multiple multithreaded awaiters`() {
         val scope = CoroutineScope(Dispatchers.IO)
         val frameLimiter = FrameLimiter(scope, { 0 }, nanoTime = System::nanoTime)

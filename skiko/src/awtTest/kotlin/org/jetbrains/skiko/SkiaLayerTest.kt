@@ -20,10 +20,12 @@ import org.jetbrains.skiko.util.uiTest
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Timeout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.WindowEvent
+import java.util.concurrent.TimeUnit
 import javax.swing.JFrame
 import javax.swing.JLayeredPane
 import javax.swing.WindowConstants
@@ -277,7 +279,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 60000)
+    @Test
+    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `stress test - open multiple windows`() = uiTest {
         fun window(isAnimated: Boolean) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -319,7 +322,8 @@ class SkiaLayerTest {
         delay(5000)
     }
 
-    @Test(timeout = 60000)
+    @Test
+    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `stress test - resize and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
@@ -342,7 +346,8 @@ class SkiaLayerTest {
         window.close()
     }
 
-    @Test(timeout = 60000)
+    @Test
+    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `stress test - open and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
@@ -368,7 +373,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 60000)
+    @Test
+    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `fallback to software renderer, fail on init context`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {
@@ -392,7 +398,8 @@ class SkiaLayerTest {
         )
     }
 
-    @Test(timeout = 60000)
+    @Test
+    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `fallback to software renderer, fail on create redrawer`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {
@@ -406,7 +413,8 @@ class SkiaLayerTest {
         )
     }
 
-    @Test(timeout = 60000)
+    @Test
+    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `fallback to software renderer, fail on draw`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {
@@ -471,7 +479,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 20000)
+    @Test
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render continuously empty content without vsync`() = uiTest {
         val targetDrawCount = 500
         var drawCount = 0

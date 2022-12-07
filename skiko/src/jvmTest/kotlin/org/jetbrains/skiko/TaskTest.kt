@@ -1,21 +1,15 @@
 package org.jetbrains.skiko
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.yield
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.Timeout
 import java.util.concurrent.Executors.newSingleThreadExecutor
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.random.Random
 
@@ -76,7 +70,8 @@ internal class TaskTest {
         assertFalse(job.isCompleted)
     }
 
-    @Test(timeout = 5000)
+    @Test
+    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `finish in another thread`() {
         val task = Task()
 
@@ -91,7 +86,8 @@ internal class TaskTest {
         }
     }
 
-    @Test(timeout = 5000)
+    @Test
+    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `simulate MacOs layer`() {
         runBlocking {
             val job = Job()
@@ -121,7 +117,8 @@ internal class TaskTest {
     // TODO why do this test fail on CI? https://github.com/JetBrains/skiko/runs/5096776296?check_suite_focus=true
     //  (test timed out after 10000 milliseconds)
     //  What is wrong - Task class, this test, or UI tests somehow interfere with this test?
-    @Test(timeout = 10000)
+    @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @Ignore
     fun `simulate MacOs layer with another renderings`() {
         runBlocking {
