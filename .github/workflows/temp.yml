@@ -20,12 +20,14 @@ jobs:
      matrix:
        jdkDistributions: [ adopt ]
        jdkVersions: [ 11 ]
+       counter: [ 1,2,3,4 ]
 #       jdkDistributions: [ temurin, zulu, adopt, liberica, microsoft, corretto ]
 #       jdkVersions: [ 11, 11.0, 11.0.4, 16, 17 ]
     runs-on: ubuntu-20.04
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - run: echo "counter ${{ matrix.counter }}"
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
@@ -48,25 +50,55 @@ jobs:
           sudo apt-get install ninja-build fontconfig libfontconfig1-dev libglu1-mesa-dev libxrandr-dev libdbus-1-dev zip xvfb -y
           sudo Xvfb :0 -screen 0 1280x720x24 &
       - shell: bash
-        timeout-minutes: 15
-        run: |
-          # awtTest
-          export DISPLAY=:0
-          $GRADLE_SCRIPT
-      - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 10
+        timeout-minutes: 5
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 10
+        timeout-minutes: 5
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
+        timeout-minutes: 5
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
+        timeout-minutes: 5
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
+        timeout-minutes: 5
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
+        timeout-minutes: 5
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
+        timeout-minutes: 5
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
+        timeout-minutes: 5
         run: |
           # awtTest
           export DISPLAY=:0
