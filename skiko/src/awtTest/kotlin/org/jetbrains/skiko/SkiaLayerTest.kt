@@ -13,16 +13,12 @@ import org.jetbrains.skia.paragraph.ParagraphStyle
 import org.jetbrains.skia.paragraph.TextStyle
 import org.jetbrains.skiko.context.JvmContextHandler
 import org.jetbrains.skiko.redrawer.Redrawer
-import org.jetbrains.skiko.util.ScreenshotTestRule
-import org.jetbrains.skiko.util.UiTestScope
-import org.jetbrains.skiko.util.UiTestWindow
-import org.jetbrains.skiko.util.uiTest
+import org.jetbrains.skiko.util.*
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
-import org.junit.Rule
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Timeout
-import org.junit.jupiter.migrationsupport.rules.EnableRuleMigrationSupport
+import org.junit.jupiter.api.extension.ExtendWith
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.WindowEvent
@@ -35,7 +31,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @Suppress("BlockingMethodInNonBlockingContext", "SameParameterValue")
-@EnableRuleMigrationSupport
+//@ExtendWith(ScreenshotTestExtension::class)
 class SkiaLayerTest {
     private val fontCollection = FontCollection()
         .setDefaultFontManager(FontMgr.default)
@@ -51,9 +47,6 @@ class SkiaLayerTest {
             .addText(text)
             .popStyle()
             .build()
-
-    @get:Rule
-    val screenshots = ScreenshotTestRule()
 
     @Test
     fun `should not leak native windows`() = uiTest {

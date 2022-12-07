@@ -1,18 +1,16 @@
 package org.jetbrains.skiko
 
 import org.jetbrains.skia.*
-import org.jetbrains.skiko.util.ScreenshotTestRule
-import org.jetbrains.skiko.util.loadResourceImage
+import org.jetbrains.skiko.util.*
 import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
+//@ExtendWith(ScreenshotTestExtension::class)
 class PaintTest {
-    @get:Rule
-    val screenshots = ScreenshotTestRule()
-
     @Test
     fun filterQuality() {
         // macOs has different results

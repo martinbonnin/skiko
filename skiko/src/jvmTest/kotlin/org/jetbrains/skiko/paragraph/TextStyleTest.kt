@@ -6,13 +6,13 @@ import org.jetbrains.skia.tests.makeFromResource
 import org.jetbrains.skiko.OS
 import org.jetbrains.skiko.hostOs
 import org.jetbrains.skiko.tests.runTest
-import org.jetbrains.skiko.util.ScreenshotTestRule
+import org.jetbrains.skiko.util.*
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+//@ExtendWith(ScreenshotTestExtension::class)
 class TextStyleTest {
-    @get:Rule
-    val screenshots = ScreenshotTestRule()
 
     @Test
     fun canApplyBaselineShift() = runTest {
