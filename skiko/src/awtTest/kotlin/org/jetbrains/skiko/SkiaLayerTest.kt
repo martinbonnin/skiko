@@ -22,6 +22,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Timeout
+import org.junit.jupiter.migrationsupport.rules.EnableRuleMigrationSupport
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.WindowEvent
@@ -34,6 +35,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @Suppress("BlockingMethodInNonBlockingContext", "SameParameterValue")
+@EnableRuleMigrationSupport
 class SkiaLayerTest {
     private val fontCollection = FontCollection()
         .setDefaultFontManager(FontMgr.default)
