@@ -13,6 +13,10 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
    linux:
+#    strategy:
+#     matrix:
+#       jdkDistributions: [ temurin, zulu, adopt, liberica, microsoft, corretto ]
+#       jdkVersions: [ 11, 11.0, 11.0.4, 16, 17 ]
     runs-on: ubuntu-20.04
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -22,15 +26,15 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - uses: nttld/setup-ndk@v1
-        id: setup-ndk
-        with:
-          ndk-version: r21e
+#      - uses: nttld/setup-ndk@v1
+#        id: setup-ndk
+#        with:
+#          ndk-version: r21e
       - uses: android-actions/setup-android@v2
       # Runs a set of commands using the runners shell
       - shell: bash
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+#        env:
+#          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
           # TODO: simplify installation of compilers.
           sudo apt-get update -y
@@ -45,17 +49,9 @@ jobs:
           sudo apt-get install ninja-build fontconfig libfontconfig1-dev libglu1-mesa-dev libxrandr-dev libdbus-1-dev zip xvfb -y
           sudo Xvfb :0 -screen 0 1280x720x24 &
       - shell: bash
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-        timeout-minutes: 10
-        run: |
-          # linuxX64Test
-          export DISPLAY=:0
-          ./gradlew --stacktrace --info -Pskiko.native.enabled=true -Pkotlin.native.cacheKind.linuxX64=none -Pskiko.test.onci=true :skiko:linuxX64Test
-      - shell: bash
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-        timeout-minutes: 10
+#        env:
+#          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        timeout-minutes: 5
         run: |
           # awtTest
           export DISPLAY=:0
