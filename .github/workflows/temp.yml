@@ -105,6 +105,7 @@ jobs:
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: test-reports-linux
           path: ./skiko/build/reports/tests
