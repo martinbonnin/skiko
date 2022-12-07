@@ -8,6 +8,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.Timeout
+import org.junitpioneer.jupiter.RetryingTest
 import java.util.concurrent.Executors.newSingleThreadExecutor
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
@@ -70,7 +71,7 @@ internal class TaskTest {
         assertFalse(job.isCompleted)
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `finish in another thread`() {
         val task = Task()
@@ -86,7 +87,7 @@ internal class TaskTest {
         }
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `simulate MacOs layer`() {
         runBlocking {
@@ -117,8 +118,8 @@ internal class TaskTest {
     // TODO why do this test fail on CI? https://github.com/JetBrains/skiko/runs/5096776296?check_suite_focus=true
     //  (test timed out after 10000 milliseconds)
     //  What is wrong - Task class, this test, or UI tests somehow interfere with this test?
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @Ignore
     fun `simulate MacOs layer with another renderings`() {
         runBlocking {

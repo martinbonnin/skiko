@@ -314,6 +314,7 @@ kotlin {
                 implementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
                 implementation("org.junit.jupiter:junit-jupiter-engine:5.9.1")
                 implementation("org.junit.jupiter:junit-jupiter-migrationsupport:5.9.1")
+                implementation("org.junit-pioneer:junit-pioneer:1.9.0")
                 implementation(kotlin("test"))
             }
         }

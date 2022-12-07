@@ -19,6 +19,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Timeout
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junitpioneer.jupiter.RetryingTest
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.WindowEvent
@@ -48,8 +49,8 @@ class SkiaLayerTest {
             .popStyle()
             .build()
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should not leak native windows`() = uiTest {
         assumeTrue(hostOs.isMacOS)
 
@@ -85,8 +86,8 @@ class SkiaLayerTest {
         )
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render single window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -110,8 +111,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render single window before window show`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -145,8 +146,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render empty layer`() = uiTest {
         val window = JFrame()
         val layer = SkiaLayer(
@@ -195,8 +196,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `resize window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -217,8 +218,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render three windows`() = uiTest {
         fun window(color: Color) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -254,8 +255,8 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should call onRender after init, after resize, and only once after needRedraw`() = uiTest {
         var renderCount = 0
 
@@ -289,7 +290,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `stress test - open multiple windows`() = uiTest {
         fun window(isAnimated: Boolean) = UiTestWindow().apply {
@@ -332,7 +333,7 @@ class SkiaLayerTest {
         delay(5000)
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `stress test - resize and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
@@ -356,7 +357,7 @@ class SkiaLayerTest {
         window.close()
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `stress test - open and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
@@ -383,7 +384,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `fallback to software renderer, fail on init context`() = uiTest {
         testFallbackToSoftware(
@@ -408,7 +409,7 @@ class SkiaLayerTest {
         )
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `fallback to software renderer, fail on create redrawer`() = uiTest {
         testFallbackToSoftware(
@@ -423,7 +424,7 @@ class SkiaLayerTest {
         )
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `fallback to software renderer, fail on draw`() = uiTest {
         testFallbackToSoftware(
@@ -489,7 +490,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render continuously empty content without vsync`() = uiTest {
         val targetDrawCount = 500
@@ -527,25 +528,26 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (Windows)`() {
         testRenderText(OS.Windows, "org_jetbrains_skiko_SkiaLayerTest_render_text_Windows")
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (Linux)`() {
         testRenderText(OS.Linux, "org_jetbrains_skiko_SkiaLayerTest_render_text_Linux")
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (MacOS)`() {
         testRenderText(OS.MacOS, "org_jetbrains_skiko_SkiaLayerTest_render_text_MacOS")
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun analytics() = uiTest {
         val analytics = object : SkiaLayerAnalytics {
             val rendererInfo = object {

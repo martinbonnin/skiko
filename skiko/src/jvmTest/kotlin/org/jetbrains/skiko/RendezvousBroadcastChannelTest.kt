@@ -5,11 +5,12 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.jupiter.api.Timeout
+import org.junitpioneer.jupiter.RetryingTest
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class RendezvousBroadcastChannelTest {
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `receive, send`() {
         var actualValue = -1
@@ -29,7 +30,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(1, actualValue)
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `send, receive`() {
         var actualValue = -1
@@ -49,7 +50,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(1, actualValue)
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `send when there is multiple receivers`() {
         val actualValues = mutableListOf<Int>()
@@ -71,7 +72,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(listOf(1, 1, 1, 1, 1), actualValues)
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
     @Timeout(value = 30_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `multithreading sending and receiving should not cause deadlock`() {
         val channel = RendezvousBroadcastChannel<Int>()
@@ -96,7 +97,8 @@ class RendezvousBroadcastChannelTest {
         }
     }
 
-    @Test
+    @RetryingTest(maxAttempts = 3)
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `first send should not end if there is no received value`() {
         var isExceptionThrown = false
         val channel = RendezvousBroadcastChannel<Int>()
