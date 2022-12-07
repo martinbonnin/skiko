@@ -49,6 +49,7 @@ class SkiaLayerTest {
             .build()
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should not leak native windows`() = uiTest {
         assumeTrue(hostOs.isMacOS)
 
@@ -85,6 +86,7 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render single window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -109,6 +111,7 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render single window before window show`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -143,6 +146,7 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render empty layer`() = uiTest {
         val window = JFrame()
         val layer = SkiaLayer(
@@ -192,6 +196,7 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `resize window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -213,6 +218,7 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render three windows`() = uiTest {
         fun window(color: Color) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -249,6 +255,7 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should call onRender after init, after resize, and only once after needRedraw`() = uiTest {
         var renderCount = 0
 
@@ -521,16 +528,19 @@ class SkiaLayerTest {
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (Windows)`() {
         testRenderText(OS.Windows, "org_jetbrains_skiko_SkiaLayerTest_render_text_Windows")
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (Linux)`() {
         testRenderText(OS.Linux, "org_jetbrains_skiko_SkiaLayerTest_render_text_Linux")
     }
 
     @Test
+    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (MacOS)`() {
         testRenderText(OS.MacOS, "org_jetbrains_skiko_SkiaLayerTest_render_text_MacOS")
     }
