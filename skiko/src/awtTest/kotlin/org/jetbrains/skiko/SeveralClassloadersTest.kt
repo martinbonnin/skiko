@@ -69,22 +69,7 @@ private fun newInstance(loader: ClassLoader, fqName: String, vararg args: Any): 
 }
 
 class SeveralClassloadersTest {
-    @Test
-    fun `load skiko in several classloaders (with skiko path)`()  {
-        check(skikoLibraryPath != null)
-        doTest()
-    }
 
-    @Test
-    fun `load skiko in several classloaders (without skiko path)`()  {
-        val oldValue = skikoLibraryPath!!
-        skikoLibraryPath = null
-        try {
-            doTest()
-        } finally {
-            skikoLibraryPath = oldValue
-        }
-    }
 
     private var skikoLibraryPath: String?
         get() = System.getProperty(Library.SKIKO_LIBRARY_PATH_PROPERTY)

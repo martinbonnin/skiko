@@ -127,23 +127,4 @@ class SkiaLayerPerformanceTest {
         }
     }
 
-    @Test
-    fun `FPS is near display refresh rate (multiple windows)`() = uiTest {
-        assumeTrue(System.getProperty("skiko.test.performance.enabled", "true") == "true")
-
-        val helpers = (1..3).map { index ->
-            performanceHelper(width = 40, height = 20, frameCount = 300, deviatedTerminalCount = 20).apply {
-                window.toFront()
-                window.location = Point((index + 1) * 200, 200)
-            }
-        }
-        delay(1000)
-        try {
-            helpers.forEach { it.startCollect() }
-            awaitFrameCollection(helpers)
-            helpers.forEach { it.printInfo() }
-        } finally {
-            helpers.forEach { it.window.dispose() }
-        }
-    }
 }
