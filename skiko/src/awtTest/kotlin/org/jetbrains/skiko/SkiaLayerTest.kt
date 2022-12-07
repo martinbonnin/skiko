@@ -50,7 +50,7 @@ class SkiaLayerTest {
             .build()
 
     @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should not leak native windows`() = uiTest {
         assumeTrue(hostOs.isMacOS)
 
@@ -529,19 +529,19 @@ class SkiaLayerTest {
     }
 
     @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (Windows)`() {
         testRenderText(OS.Windows, "org_jetbrains_skiko_SkiaLayerTest_render_text_Windows")
     }
 
     @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (Linux)`() {
         testRenderText(OS.Linux, "org_jetbrains_skiko_SkiaLayerTest_render_text_Linux")
     }
 
     @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `render text (MacOS)`() {
         testRenderText(OS.MacOS, "org_jetbrains_skiko_SkiaLayerTest_render_text_MacOS")
     }
