@@ -52,55 +52,55 @@ jobs:
           sudo apt-get install ninja-build fontconfig libfontconfig1-dev libglu1-mesa-dev libxrandr-dev libdbus-1-dev zip xvfb -y
           sudo Xvfb :0 -screen 0 1280x720x24 &
       - shell: bash
+        timeout-minutes: 15
+        run: |
+          # awtTest
+          export DISPLAY=:0
+          $GRADLE_SCRIPT
+      - shell: bash
         timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
-        timeout-minutes: 5
-        run: |
-          # awtTest
-          export DISPLAY=:0
-          $GRADLE_SCRIPT
-      - shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           # awtTest
           export DISPLAY=:0
