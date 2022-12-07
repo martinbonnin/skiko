@@ -28,6 +28,7 @@ import javax.swing.JFrame
 import javax.swing.JLayeredPane
 import javax.swing.WindowConstants
 import kotlin.random.Random
+import kotlin.test.Ignore
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -49,6 +50,7 @@ class SkiaLayerTest {
             .popStyle()
             .build()
 
+    @Ignore
     @RetryingTest(maxAttempts = 3)
     @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should not leak native windows`() = uiTest {
@@ -528,20 +530,19 @@ class SkiaLayerTest {
         }
     }
 
-    @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Ignore
+    @Test
     fun `render text (Windows)`() {
         testRenderText(OS.Windows, "org_jetbrains_skiko_SkiaLayerTest_render_text_Windows")
     }
 
-    @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test
     fun `render text (Linux)`() {
         testRenderText(OS.Linux, "org_jetbrains_skiko_SkiaLayerTest_render_text_Linux")
     }
 
-    @RetryingTest(maxAttempts = 3)
-    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Ignore
+    @Test
     fun `render text (MacOS)`() {
         testRenderText(OS.MacOS, "org_jetbrains_skiko_SkiaLayerTest_render_text_MacOS")
     }
