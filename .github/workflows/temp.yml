@@ -14,15 +14,6 @@ on:
 
 env:
   GRADLE_SCRIPT: ./gradlew --no-daemon --stacktrace --info --rerun-tasks -Pskiko.native.enabled=true -Pkotlin.native.cacheKind.linuxX64=none -Pskiko.test.onci=true :skiko:awtTest
-  PRINT_LOGS_IN_BACKGROUND: |
-    progress() {
-      while [ 0 ]
-        do
-          echo "tick $(date)"
-          sleep 1
-        done
-    }
-    progress &
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -64,63 +55,189 @@ jobs:
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          $PRINT_LOGS_IN_BACKGROUND
+          progress() {
+            while [ 0 ]
+              do
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "-------------------------------------------------------------------------------------------------"
+                echo "tick $(date)"
+                ps aux | grep java
+                echo "-------------------------------------------------------------------------------------------------"
+                ps aux | grep java | grep jdk | awk '{print $2}' | while read pid; do
+                   jstack $pid
+                done
+                sleep 30
+              done
+          }
+          progress &
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - uses: actions/upload-artifact@v2
