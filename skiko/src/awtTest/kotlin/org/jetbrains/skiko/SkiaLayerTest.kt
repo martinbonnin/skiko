@@ -137,7 +137,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 10_000)
+    @Test(timeout = 20_000)
     fun `render empty layer`() = uiTest {
         val window = JFrame()
         val layer = SkiaLayer(
@@ -207,7 +207,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 10_000)
+    @Test(timeout = 20_000)
     fun `render three windows`() = uiTest {
         fun window(color: Color) = UiTestWindow().apply {
             setLocation(200, 200)
