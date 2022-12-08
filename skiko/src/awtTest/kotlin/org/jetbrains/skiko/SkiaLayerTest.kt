@@ -87,7 +87,7 @@ class SkiaLayerTest {
         )
     }
 
-    @Test(timeout = 5_000)
+    @Test(timeout = 10_000)
     fun `render single window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -111,7 +111,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 5_000)
+    @Test(timeout = 10_000)
     fun `render single window before window show`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -137,7 +137,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 5_000)
+    @Test(timeout = 10_000)
     fun `render empty layer`() = uiTest {
         val window = JFrame()
         val layer = SkiaLayer(
@@ -186,7 +186,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 5_000)
+    @Test(timeout = 10_000)
     fun `resize window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -207,7 +207,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 5_000)
+    @Test(timeout = 10_000)
     fun `render three windows`() = uiTest {
         fun window(color: Color) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -243,7 +243,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 5_000)
+    @Test(timeout = 10_000)
     fun `should call onRender after init, after resize, and only once after needRedraw`() = uiTest {
         var renderCount = 0
 
@@ -277,7 +277,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 10_000)
+    @Test(timeout = 20_000)
     fun `stress test - open multiple windows`() = uiTest {
         fun window(isAnimated: Boolean) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -342,7 +342,7 @@ class SkiaLayerTest {
         window.close()
     }
 
-    @Test(timeout = 10_000)
+    @Test(timeout = 20_000)
     fun `stress test - open and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
