@@ -14,6 +14,15 @@ on:
 
 env:
   GRADLE_SCRIPT: ./gradlew --no-daemon --stacktrace --info --rerun-tasks -Pskiko.native.enabled=true -Pkotlin.native.cacheKind.linuxX64=none -Pskiko.test.onci=true :skiko:awtTest
+  PRINT_LOGS_IN_BACKGROUND: |
+    progress() {
+      while [ 0 ]
+        do
+          echo "tick $(date)"
+          sleep 1
+        done
+    }
+    progress &
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,7 +31,7 @@ jobs:
      matrix:
        jdkDistributions: [ adopt ]
        jdkVersions: [ 11 ]
-       counter: [ 1, 2 ]
+       counter: [ 1 ]
 #       jdkDistributions: [ temurin, zulu, adopt, liberica, microsoft, corretto ]
 #       jdkVersions: [ 11, 11.0, 11.0.4, 16, 17 ]
     runs-on: ubuntu-20.04
@@ -55,126 +64,63 @@ jobs:
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - shell: bash
         timeout-minutes: 30
         run: |
           # awtTest
-          progress() {
-            while [ 0 ]
-              do
-                echo "tick $(date)"
-                sleep 1
-              done
-          }
-          progress &
+          $PRINT_LOGS_IN_BACKGROUND
           export DISPLAY=:0
           $GRADLE_SCRIPT
       - uses: actions/upload-artifact@v2
