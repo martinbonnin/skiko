@@ -6,15 +6,15 @@ import org.jetbrains.skia.tests.makeFromResource
 import org.jetbrains.skiko.OS
 import org.jetbrains.skiko.hostOs
 import org.jetbrains.skiko.tests.runTest
-import org.jetbrains.skiko.util.*
+import org.jetbrains.skiko.util.ScreenshotTestRule
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-//@ExtendWith(ScreenshotTestExtension::class)
 class TextStyleTest {
+    @get:Rule
+    val screenshots = ScreenshotTestRule()
 
-    @Test
+    @Test(timeout = 1_000)
     fun canApplyBaselineShift() = runTest {
         if (hostOs != OS.MacOS) {
             return@runTest
@@ -59,14 +59,11 @@ class TextStyleTest {
             makeImageSnapshot()
         }
 
-        screenshots.assert(
-            image,
-            testIdentifier = "org_jetbrains_skiko_tests_org_jetbrains_skiko_paragraph_TextStyleTest_canApplyBaselineShift"
-        )
+        screenshots.assert(image)
     }
 
 
-    @Test
+    @Test(timeout = 1_000)
     fun canApplyTextIndent() = runTest {
         if (hostOs != OS.MacOS) {
             return@runTest
@@ -131,9 +128,6 @@ class TextStyleTest {
             makeImageSnapshot()
         }
 
-        screenshots.assert(
-            image,
-            testIdentifier = "org_jetbrains_skiko_tests_org_jetbrains_skiko_paragraph_TextStyleTest_canApplyTextIndent"
-        )
+        screenshots.assert(image)
     }
 }

@@ -13,27 +13,25 @@ import org.jetbrains.skia.paragraph.ParagraphStyle
 import org.jetbrains.skia.paragraph.TextStyle
 import org.jetbrains.skiko.context.JvmContextHandler
 import org.jetbrains.skiko.redrawer.Redrawer
-import org.jetbrains.skiko.util.*
+import org.jetbrains.skiko.util.ScreenshotTestRule
+import org.jetbrains.skiko.util.UiTestScope
+import org.jetbrains.skiko.util.UiTestWindow
+import org.jetbrains.skiko.util.uiTest
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Timeout
-import org.junit.jupiter.api.extension.ExtendWith
-import org.junitpioneer.jupiter.RetryingTest
+import org.junit.Rule
+import org.junit.Test
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.WindowEvent
-import java.util.concurrent.TimeUnit
 import javax.swing.JFrame
 import javax.swing.JLayeredPane
 import javax.swing.WindowConstants
 import kotlin.random.Random
-import kotlin.test.Ignore
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @Suppress("BlockingMethodInNonBlockingContext", "SameParameterValue")
-//@ExtendWith(ScreenshotTestExtension::class)
 class SkiaLayerTest {
     private val fontCollection = FontCollection()
         .setDefaultFontManager(FontMgr.default)
@@ -50,9 +48,10 @@ class SkiaLayerTest {
             .popStyle()
             .build()
 
-    @Ignore
+    @get:Rule
+    val screenshots = ScreenshotTestRule()
+
     @Test
-    @Timeout(value = 40_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     fun `should not leak native windows`() = uiTest {
         assumeTrue(hostOs.isMacOS)
 
@@ -88,8 +87,7 @@ class SkiaLayerTest {
         )
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun `render single window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -102,19 +100,18 @@ class SkiaLayerTest {
             window.isVisible = true
 
             delay(1000)
-            screenshots.assert(window.bounds, "frame1", "org_jetbrains_skiko_SkiaLayerTest_render_single_window" )
+            screenshots.assert(window.bounds, "frame1")
 
             app.rectWidth = 100
             window.layer.needRedraw()
             delay(1000)
-            screenshots.assert(window.bounds, "frame2", "org_jetbrains_skiko_SkiaLayerTest_render_single_window")
+            screenshots.assert(window.bounds, "frame2")
         } finally {
             window.close()
         }
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun `render single window before window show`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -129,27 +126,18 @@ class SkiaLayerTest {
             window.isVisible = true
 
             delay(1000)
-            screenshots.assert(
-                window.bounds,
-                "frame1",
-                "org_jetbrains_skiko_SkiaLayerTest_render_single_window_before_window_show"
-            )
+            screenshots.assert(window.bounds, "frame1")
 
             app.rectWidth = 100
             window.layer.needRedraw()
             delay(1000)
-            screenshots.assert(
-                window.bounds,
-                "frame2",
-                "org_jetbrains_skiko_SkiaLayerTest_render_single_window_before_window_show"
-            )
+            screenshots.assert(window.bounds, "frame2")
         } finally {
             window.close()
         }
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun `render empty layer`() = uiTest {
         val window = JFrame()
         val layer = SkiaLayer(
@@ -198,8 +186,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun `resize window`() = uiTest {
         val window = UiTestWindow()
         try {
@@ -214,14 +201,13 @@ class SkiaLayerTest {
             window.setSize(80, 40)
             delay(1000)
 
-            screenshots.assert(window.bounds, testIdentifier = "org_jetbrains_skiko_SkiaLayerTest_resize_window")
+            screenshots.assert(window.bounds)
         } finally {
             window.close()
         }
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun `render three windows`() = uiTest {
         fun window(color: Color) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -241,15 +227,15 @@ class SkiaLayerTest {
 
             window1.toFront()
             delay(1000)
-            screenshots.assert(window1.bounds, "window1", "org_jetbrains_skiko_SkiaLayerTest_render_three_windows")
+            screenshots.assert(window1.bounds, "window1")
 
             window2.toFront()
             delay(1000)
-            screenshots.assert(window2.bounds, "window2", "org_jetbrains_skiko_SkiaLayerTest_render_three_windows")
+            screenshots.assert(window2.bounds, "window2")
 
             window3.toFront()
             delay(1000)
-            screenshots.assert(window3.bounds, "window3", "org_jetbrains_skiko_SkiaLayerTest_render_three_windows")
+            screenshots.assert(window3.bounds, "window3")
         } finally {
             window1.close()
             window2.close()
@@ -257,8 +243,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun `should call onRender after init, after resize, and only once after needRedraw`() = uiTest {
         var renderCount = 0
 
@@ -292,8 +277,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 20_000)
     fun `stress test - open multiple windows`() = uiTest {
         fun window(isAnimated: Boolean) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -335,8 +319,7 @@ class SkiaLayerTest {
         delay(5000)
     }
 
-    @Test
-    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 20_000)
     fun `stress test - resize and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
@@ -359,8 +342,7 @@ class SkiaLayerTest {
         window.close()
     }
 
-    @Test
-    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 20_000)
     fun `stress test - open and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
@@ -386,8 +368,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 20_000)
     fun `fallback to software renderer, fail on init context`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {
@@ -411,8 +392,7 @@ class SkiaLayerTest {
         )
     }
 
-    @Test
-    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     fun `fallback to software renderer, fail on create redrawer`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {
@@ -426,8 +406,7 @@ class SkiaLayerTest {
         )
     }
 
-    @Test
-    @Timeout(value = 60_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     fun `fallback to software renderer, fail on draw`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {
@@ -492,8 +471,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     fun `render continuously empty content without vsync`() = uiTest {
         val targetDrawCount = 500
         var drawCount = 0
@@ -530,25 +508,22 @@ class SkiaLayerTest {
         }
     }
 
-    @Ignore
-    @Test
+    @Test(timeout = 5_000)
     fun `render text (Windows)`() {
-        testRenderText(OS.Windows, "org_jetbrains_skiko_SkiaLayerTest_render_text_Windows")
+        testRenderText(OS.Windows)
     }
 
-    @Test
+    @Test(timeout = 5_000)
     fun `render text (Linux)`() {
-        testRenderText(OS.Linux, "org_jetbrains_skiko_SkiaLayerTest_render_text_Linux")
+        testRenderText(OS.Linux)
     }
 
-    @Ignore
-    @Test
+    @Test(timeout = 5_000)
     fun `render text (MacOS)`() {
-        testRenderText(OS.MacOS, "org_jetbrains_skiko_SkiaLayerTest_render_text_MacOS")
+        testRenderText(OS.MacOS)
     }
 
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 5_000)
     fun analytics() = uiTest {
         val analytics = object : SkiaLayerAnalytics {
             val rendererInfo = object {
@@ -661,7 +636,7 @@ class SkiaLayerTest {
         }
     }
 
-    private fun testRenderText(os: OS, testIdentifier:String) = uiTest {
+    private fun testRenderText(os: OS) = uiTest {
         assumeTrue(hostOs == os)
 
         val window = UiTestWindow()
@@ -694,7 +669,7 @@ class SkiaLayerTest {
             assertEquals(true, lineMetrics.first().isHardBreak)
             assertEquals(0, lineMetrics.first().lineNumber)
 
-            screenshots.assert(window.bounds, testIdentifier = testIdentifier)
+            screenshots.assert(window.bounds)
         } finally {
             window.close()
         }

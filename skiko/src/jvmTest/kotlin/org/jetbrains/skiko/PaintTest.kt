@@ -1,17 +1,19 @@
 package org.jetbrains.skiko
 
 import org.jetbrains.skia.*
-import org.jetbrains.skiko.util.*
+import org.jetbrains.skiko.util.ScreenshotTestRule
+import org.jetbrains.skiko.util.loadResourceImage
 import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-//@ExtendWith(ScreenshotTestExtension::class)
 class PaintTest {
-    @Test
+    @get:Rule
+    val screenshots = ScreenshotTestRule()
+
+    @Test(timeout = 1_000)
     fun filterQuality() {
         // macOs has different results
         assumeTrue(hostOs.isWindows)
@@ -43,10 +45,10 @@ class PaintTest {
             true
         )
 
-        screenshots.assert(surface.makeImageSnapshot(), testIdentifier = "org_jetbrains_skiko_PaintTest_filterQuality")
+        screenshots.assert(surface.makeImageSnapshot())
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun canDrawShader() {
         val surface = Surface.makeRasterN32Premul(16, 16)
         val rect = Rect(1.0f, 1.0f, 15.0f, 15.0f)
@@ -58,10 +60,10 @@ class PaintTest {
             }
         )
 
-        screenshots.assert(surface.makeImageSnapshot(), testIdentifier = "org_jetbrains_skiko_PaintTest_canDrawShader")
+        screenshots.assert(surface.makeImageSnapshot())
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun paintTest() {
         // TODO: ported from skija and we need address the commented out assertions
         val paintA = Paint().apply { color = 0x12345678 }
