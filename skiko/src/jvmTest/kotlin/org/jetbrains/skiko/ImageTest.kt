@@ -6,11 +6,11 @@ import org.jetbrains.skia.Path
 import org.jetbrains.skia.Surface
 import java.io.File
 import java.nio.file.Files
-import kotlin.test.Test
 import java.nio.file.Path as FilePath
+import org.junit.Test
 
 class ImageTest  {
-    @Test
+    @Test(timeout = 3_000)
     fun imageTest() {
         Surface.makeRasterN32Premul(100, 100).use { surface ->
                 val paint = Paint()

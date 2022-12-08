@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 class FrameDispatcherTest {
     private var frameCount = 0
 
-    @Test
+    @Test(timeout = 1_000)
     fun `shouldn't call onFrame after the creating`() = test {
         FrameDispatcher(scope = this) {
             frameCount++
@@ -22,7 +22,7 @@ class FrameDispatcherTest {
         assertEquals(0, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `scheduleFrame after creating`() = test {
         val frameDispatcher = FrameDispatcher(scope = this) {
             frameCount++
@@ -34,7 +34,7 @@ class FrameDispatcherTest {
         assertEquals(1, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `scheduleFrame multiple times after creating`() = test {
         val frameDispatcher = FrameDispatcher(scope = this) {
             frameCount++
@@ -49,7 +49,7 @@ class FrameDispatcherTest {
         assertEquals(1, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `scheduleFrame second time after first onFrame`() = test {
         val frameDispatcher = FrameDispatcher(scope = this) {
             frameCount++
@@ -63,7 +63,7 @@ class FrameDispatcherTest {
         assertEquals(2, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `scheduleFrame second time twice after first onFrame`() = test {
         val frameDispatcher = FrameDispatcher(scope = this) {
             frameCount++
@@ -78,7 +78,7 @@ class FrameDispatcherTest {
         assertEquals(2, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `scheduleFrame during onFrame`() = test {
         lateinit var frameDispatcher: FrameDispatcher
         frameDispatcher = FrameDispatcher(scope = this) {
@@ -100,7 +100,7 @@ class FrameDispatcherTest {
         assertEquals(4, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `scheduleFrame multiple times during onFrame`() = test {
         lateinit var frameDispatcher: FrameDispatcher
         frameDispatcher = FrameDispatcher(scope = this) {
@@ -124,7 +124,7 @@ class FrameDispatcherTest {
         assertEquals(4, frameCount)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `cancel coroutine scope`() = test {
         val scope = CoroutineScope(coroutineContext)
 
@@ -152,7 +152,7 @@ class FrameDispatcherTest {
         assertEquals(3, frameCount)
     }
 
-    @Test
+    @Test(timeout = 3_000)
     fun `perform tasks scheduled in the frame after the frame`() {
         val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
         val history = mutableListOf<String>()

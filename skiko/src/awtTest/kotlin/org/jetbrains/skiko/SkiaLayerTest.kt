@@ -277,7 +277,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 20_000)
+    @Test(timeout = 10_000)
     fun `stress test - open multiple windows`() = uiTest {
         fun window(isAnimated: Boolean) = UiTestWindow().apply {
             setLocation(200, 200)
@@ -319,7 +319,7 @@ class SkiaLayerTest {
         delay(5000)
     }
 
-    @Test(timeout = 20_000)
+    @Test(timeout = 10_000)
     fun `stress test - resize and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
@@ -342,7 +342,7 @@ class SkiaLayerTest {
         window.close()
     }
 
-    @Test(timeout = 20_000)
+    @Test(timeout = 10_000)
     fun `stress test - open and paint immediately`() = uiTest {
         fun openWindow() = UiTestWindow(
             properties = SkiaLayerProperties(isVsyncEnabled = false, isVsyncFramelimitFallbackEnabled = true)
@@ -368,7 +368,7 @@ class SkiaLayerTest {
         }
     }
 
-    @Test(timeout = 20_000)
+    @Test(timeout = 10_000)
     fun `fallback to software renderer, fail on init context`() = uiTest {
         testFallbackToSoftware(
             object : RenderFactory {

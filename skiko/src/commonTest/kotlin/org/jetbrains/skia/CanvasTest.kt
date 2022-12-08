@@ -42,7 +42,6 @@ class CanvasTest {
             Paint()
         )
 
-        //todo compaer with png image org_jetbrains_skiko_CanvasTest_drawVertices.png
         // Hint: use surface.makeImageSnapshot().printBitmap() to print image as kotlin array
         val expected = imageFromIntArray(intArrayOf(
             0x00000000.toInt(), 0xffbf2020.toInt(), 0xff9f2040.toInt(), 0xff802060.toInt(), 0xff602080.toInt(), 0xff40209f.toInt(), 0xff2020bf.toInt(), 0xff0020df.toInt(),

@@ -1,22 +1,27 @@
 package org.jetbrains.skiko
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.yield
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.jupiter.api.Timeout
-import org.junitpioneer.jupiter.RetryingTest
 import java.util.concurrent.Executors.newSingleThreadExecutor
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.random.Random
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class TaskTest {
-    @Test
+    @Test(timeout = 1_000)
     fun `runAndAwait with finish`() = test {
         val task = Task()
 
@@ -32,7 +37,7 @@ internal class TaskTest {
         assertTrue(job.isCompleted)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `runAndAwait without finish`() = test {
         val task = Task()
 
@@ -44,7 +49,7 @@ internal class TaskTest {
         assertFalse(job.isCompleted)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `finish inside runAndAwait`() = test {
         val task = Task()
 
@@ -58,7 +63,7 @@ internal class TaskTest {
         assertTrue(job.isCompleted)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `finish before runAndAwait`() = test {
         val task = Task()
 
@@ -71,8 +76,7 @@ internal class TaskTest {
         assertFalse(job.isCompleted)
     }
 
-    @Test
-    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 3_000)
     fun `finish in another thread`() {
         val task = Task()
 
@@ -87,8 +91,7 @@ internal class TaskTest {
         }
     }
 
-    @Test
-    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 3_000)
     fun `simulate MacOs layer`() {
         runBlocking {
             val job = Job()
@@ -118,8 +121,7 @@ internal class TaskTest {
     // TODO why do this test fail on CI? https://github.com/JetBrains/skiko/runs/5096776296?check_suite_focus=true
     //  (test timed out after 10000 milliseconds)
     //  What is wrong - Task class, this test, or UI tests somehow interfere with this test?
-    @Test
-    @Timeout(value = 20_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     @Ignore
     fun `simulate MacOs layer with another renderings`() {
         runBlocking {

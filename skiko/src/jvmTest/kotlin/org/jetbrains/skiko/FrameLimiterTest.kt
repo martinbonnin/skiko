@@ -8,8 +8,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.jupiter.api.Timeout
-import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.ceil
 
@@ -18,7 +16,7 @@ class FrameLimiterTest {
     private val frameCount = 8
     private val frames = 0 until frameCount
     
-    @Test
+    @Test(timeout = 1_000)
     fun `limit 10ms, render 0ms`() {
         fun frameTicksOf(delayPrecisionMillis: Long) =
             frameTicksOf(frameLimitMillis = 10, delayPrecisionMillis, frameRenderMillis = 0)
@@ -31,7 +29,7 @@ class FrameLimiterTest {
         assertEquals(frames.map { it * 21 }, frameTicksOf(delayPrecisionMillis = 21))
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `limit 10ms, render 1ms`() {
         fun frameTicksOf(delayPrecisionMillis: Long) =
             frameTicksOf(frameLimitMillis = 10, delayPrecisionMillis, frameRenderMillis = 1)
@@ -44,7 +42,7 @@ class FrameLimiterTest {
         assertEquals(frames.map { it * 21 }, frameTicksOf(delayPrecisionMillis = 21))
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `limit 10ms, render 9ms`() {
         fun frameTicksOf(delayPrecisionMillis: Long) =
             frameTicksOf(frameLimitMillis = 10, delayPrecisionMillis, frameRenderMillis = 9)
@@ -57,7 +55,7 @@ class FrameLimiterTest {
         assertEquals(frames.map { it * 21 }, frameTicksOf(delayPrecisionMillis = 21))
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `limit 10ms, render 10ms`() {
         fun frameTicksOf(delayPrecisionMillis: Long) =
             frameTicksOf(frameLimitMillis = 10, delayPrecisionMillis, frameRenderMillis = 10)
@@ -70,7 +68,7 @@ class FrameLimiterTest {
         assertEquals(frames.map { it * 21 }, frameTicksOf(delayPrecisionMillis = 21))
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `limit 10ms, render 11ms`() {
         fun frameTicksOf(delayPrecisionMillis: Long) =
             frameTicksOf(frameLimitMillis = 10, delayPrecisionMillis, frameRenderMillis = 11)
@@ -83,7 +81,7 @@ class FrameLimiterTest {
         assertEquals(frames.map { it * 21 }, frameTicksOf(delayPrecisionMillis = 21))
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `limit 10ms, render 21ms`() {
         fun frameTicksOf(delayPrecisionMillis: Long) =
             frameTicksOf(frameLimitMillis = 10, delayPrecisionMillis, frameRenderMillis = 21)
@@ -116,7 +114,7 @@ class FrameLimiterTest {
         return ticks
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `multiple awaiters`() {
         val ticks1 = mutableListOf<Int>()
         val ticks2 = mutableListOf<Int>()
@@ -153,7 +151,7 @@ class FrameLimiterTest {
         assertEquals(frames.map { it * 10 }, ticks3)
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `cancel scope before awaitNextFrame`() = runBlockingTest {
         pauseDispatcher()
         val scope = CoroutineScope(coroutineContext + Job())
@@ -166,7 +164,7 @@ class FrameLimiterTest {
         }
     }
 
-    @Test
+    @Test(timeout = 1_000)
     fun `cancel scope after awaitNextFrame`() = runBlockingTest {
         pauseDispatcher()
         val scope = CoroutineScope(coroutineContext + Job())
@@ -182,8 +180,7 @@ class FrameLimiterTest {
         }
     }
 
-    @Test
-    @Timeout(value = 30_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     fun `multithreaded awaiter`() {
         val scope = CoroutineScope(Dispatchers.IO)
         val frameLimiter = FrameLimiter(scope, { 0 }, nanoTime = System::nanoTime)
@@ -197,8 +194,7 @@ class FrameLimiterTest {
         scope.cancel()
     }
 
-    @Test
-    @Timeout(value = 30_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     fun `multiple multithreaded awaiters`() {
         val scope = CoroutineScope(Dispatchers.IO)
         val frameLimiter = FrameLimiter(scope, { 0 }, nanoTime = System::nanoTime)

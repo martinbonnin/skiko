@@ -5,7 +5,11 @@ import org.jetbrains.skiko.hostOs
 import org.jetbrains.skiko.tests.SkipJsTarget
 import org.jetbrains.skiko.tests.SkipJvmTarget
 import org.jetbrains.skiko.tests.SkipNativeTarget
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContentEquals
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 private fun BreakIterator.asSequence() = generateSequence { next().let { n -> if (n == -1) null else n } }
 
@@ -35,7 +39,6 @@ class BreakIteratorTests {
     @Test
     @SkipNativeTarget
     @SkipJvmTarget
-    @Ignore
     fun breakIteratorSentenceFailsOnJsTest() {
         // Wasm and iOS builds of Skia do not include required data to implement those iterators,
         // see `third_party/externals/icu/flutter/README.md`.

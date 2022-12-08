@@ -4,14 +4,10 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.jupiter.api.Timeout
-import org.junitpioneer.jupiter.RetryingTest
-import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class RendezvousBroadcastChannelTest {
-    @Test
-    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 1_000)
     fun `receive, send`() {
         var actualValue = -1
 
@@ -30,8 +26,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(1, actualValue)
     }
 
-    @Test
-    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 1_000)
     fun `send, receive`() {
         var actualValue = -1
 
@@ -50,8 +45,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(1, actualValue)
     }
 
-    @Test
-    @Timeout(value = 5_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 1_000)
     fun `send when there is multiple receivers`() {
         val actualValues = mutableListOf<Int>()
 
@@ -72,8 +66,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(listOf(1, 1, 1, 1, 1), actualValues)
     }
 
-    @Test
-    @Timeout(value = 30_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 10_000)
     fun `multithreading sending and receiving should not cause deadlock`() {
         val channel = RendezvousBroadcastChannel<Int>()
 
@@ -97,8 +90,7 @@ class RendezvousBroadcastChannelTest {
         }
     }
 
-    @Test
-    @Timeout(value = 10_000, unit = TimeUnit.MILLISECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    @Test(timeout = 3_000)
     fun `first send should not end if there is no received value`() {
         var isExceptionThrown = false
         val channel = RendezvousBroadcastChannel<Int>()
@@ -115,7 +107,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(true, isExceptionThrown)
     }
 
-    @Test
+    @Test(timeout = 3_000)
     fun `second send should not end if there is no second received value`() {
         var isExceptionThrown = false
         val channel = RendezvousBroadcastChannel<Int>()
@@ -139,7 +131,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(true, isExceptionThrown)
     }
 
-    @Test
+    @Test(timeout = 3_000)
     fun `first receive should not end if there is no received value`() {
         var isExceptionThrown = false
         val channel = RendezvousBroadcastChannel<Int>()
@@ -156,7 +148,7 @@ class RendezvousBroadcastChannelTest {
         assertEquals(true, isExceptionThrown)
     }
 
-    @Test
+    @Test(timeout = 3_000)
     fun `second receive should not end if there is no second received value`() {
         var isExceptionThrown = false
         val channel = RendezvousBroadcastChannel<Int>()
@@ -181,7 +173,7 @@ class RendezvousBroadcastChannelTest {
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
+    @Test(timeout = 5_000)
     fun `produce values, consume from multiple coroutines`() = runBlockingTest {
         pauseDispatcher()
 
