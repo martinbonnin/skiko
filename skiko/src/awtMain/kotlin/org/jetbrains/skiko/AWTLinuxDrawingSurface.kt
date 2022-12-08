@@ -1,9 +1,9 @@
 package org.jetbrains.skiko
 
 internal fun <T> HardwareLayer.lockLinuxDrawingSurface(action: (LinuxDrawingSurface) -> T): T {
-    val drawingSurface = lockLinuxDrawingSurface(this)
+    val drawingSurface = lockLinuxDrawingSurface(this)//A1
     try {
-        return action(drawingSurface)
+        return action(drawingSurface)//B1
     } finally {
         unlockLinuxDrawingSurface(drawingSurface)
     }
@@ -11,7 +11,7 @@ internal fun <T> HardwareLayer.lockLinuxDrawingSurface(action: (LinuxDrawingSurf
 
 internal fun lockLinuxDrawingSurface(layer: HardwareLayer): LinuxDrawingSurface {
     val drawingSurface = layer.getDrawingSurface()
-    drawingSurface.lock()
+    drawingSurface.lock()//A2
     return drawingSurface.getInfo().use {
         LinuxDrawingSurface(
             drawingSurface,
