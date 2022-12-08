@@ -1,6 +1,6 @@
 package org.jetbrains.skiko
 
-internal inline fun <T> HardwareLayer.lockLinuxDrawingSurface(action: (LinuxDrawingSurface) -> T): T {
+internal fun <T> HardwareLayer.lockLinuxDrawingSurface(action: (LinuxDrawingSurface) -> T): T {
     val drawingSurface = lockLinuxDrawingSurface(this)
     try {
         return action(drawingSurface)
